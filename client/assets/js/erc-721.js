@@ -2,8 +2,8 @@ Moralis.initialize("WrQJkJZs66S7Dp31Hm5Ujtn1o5uZ3pzZTmZmLOok"); // Application i
 Moralis.serverURL = 'https://l5qznev3yhuw.moralis.io:2053/server'; //Server url from moralis.io
 
 const user = Moralis.User.current();
-const openMintTokenAddress = "";
-const openMintMarketplaceAddress = "";
+const openMintTokenAddress = "0x8B5245a0a1b6e586dfADB9b47b33166772291a77";
+const openMintMarketplaceAddress = "0x5b0Effca5f0d56F2437AF15be7aa2321a28Ec3A8";
 let openMintTokenInstance;
 let openMintMarketplaceInstance;
 let web3;

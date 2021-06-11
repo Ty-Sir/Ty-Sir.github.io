@@ -17,7 +17,8 @@
       "name": "sendPayment",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [],
@@ -37,7 +38,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"balance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"dest\",\"type\":\"address\"}],\"name\":\"sendPayment\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/tylersiravo/Documents/Documents/GitHub/Ty-Sir.github.io/contracts/PaymentGateway.sol\":\"PaymentGateway\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/tylersiravo/Documents/Documents/GitHub/Ty-Sir.github.io/contracts/PaymentGateway.sol\":{\"keccak256\":\"0xd67cb2196d632463335d4a44655500f4bc3d4681ea43f1f3bd590eaa746f9423\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://348875f396213335374d300d6317d26b1511fc1e91ebe9f031f62cc0590adbbb\",\"dweb:/ipfs/QmPRerS8uBZYzgNYBvZ8XqJSKAzrt5G4BD6P8PMLPwgYJw\"]},\"/Users/tylersiravo/Documents/Documents/GitHub/Ty-Sir.github.io/contracts/node_modules/@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0x1cae4f85f114ff17b90414f5da67365b1d00337abb5bce9bf944eb78a2c0673c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d5ff16b336ce8f906478d5f2eecc6435e00833bdc0b92f6b209cf9e92cb5b2b7\",\"dweb:/ipfs/QmRD1rAZEqQ73C33cdA3QoUyBDMEWnNKNMc6PNkAZWHeQQ\"]},\"/Users/tylersiravo/Documents/Documents/GitHub/Ty-Sir.github.io/contracts/node_modules/@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0x069b2631bb5b5193a58ccf7a06266c7361bd2c20095667af4402817605627f45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6a4c96fafff76deda5697c3c5c98cade6e6e1b178254544c106bf360c079ce4e\",\"dweb:/ipfs/QmXmxubE3jnatFgZuN8ay1VV6hZ8WRmhvUjNpeVjki15HX\"]},\"/Users/tylersiravo/Documents/Documents/GitHub/Ty-Sir.github.io/contracts/node_modules/@openzeppelin/contracts/utils/Context.sol\":{\"keccak256\":\"0xf930d2df426bfcfc1f7415be724f04081c96f4fb9ec8d0e3a521c07692dface0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fc2bfdea0d2562c76fb3c4cf70a86c6ba25c5a30e8f8515c95aafdf8383f8395\",\"dweb:/ipfs/QmTbFya18786ckJfLYUoWau9jBTKfmWnWm5XSViWvB7PXN\"]},\"/Users/tylersiravo/Documents/Documents/GitHub/Ty-Sir.github.io/contracts/node_modules/@openzeppelin/contracts/utils/escrow/Escrow.sol\":{\"keccak256\":\"0xb2c66acf7d749744db1c038889794253757d471a113290e4bb1a600246166943\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://60668976b064a434caef3ede6dce89744f2d18cc8ede8610706579fe4a03fba0\",\"dweb:/ipfs/QmPUnpLdjFgGrNhuMjvBz7Grn2gMrRWisAYPrn8YZVn99k\"]}},\"version\":1}",
@@ -3596,6 +3598,12 @@
     "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
   },
   "networks": {
+    "97": {
+      "events": {},
+      "links": {},
+      "address": "0x8Eb44f3EfF780c99C214b3684723aCF6c4419a04",
+      "transactionHash": "0x29dd17e9f02e5f515d13023c4bb6880b8b8e9104209ba5110aab6c7f4cf0766b"
+    },
     "5777": {
       "events": {},
       "links": {},
@@ -3604,7 +3612,8 @@
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-06-11T18:57:48.012Z",
+  "updatedAt": "2021-06-11T19:21:50.515Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
