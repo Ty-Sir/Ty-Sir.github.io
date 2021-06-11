@@ -24,7 +24,7 @@ $(document).ready(async function(){
 });
 
 async function getBnbPrice(){
-  let bnbPrice = BASE_URL + ETH_USD_PRICE_URL;
+  let bnbPrice = BASE_URL + BNB_USD_PRICE_URL;
   const response = await fetch(bnbPrice);
   const data = await response.json();
   let usdBnbPrice = data.binancecoin.usd;
