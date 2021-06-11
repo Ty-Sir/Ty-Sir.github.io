@@ -1,4 +1,4 @@
-# Ty-Sir.github.io
+# [Ty-Sir.github.io](https://ty-sir.github.io/client/index.html)
 
 ## OpenMint
 OpenMint is a [dapp](https://www.investopedia.com/terms/d/decentralized-applications-dapps.asp) that combines aspects of social media platforms and a marketplace. It allows any (Open) user to create (Mint), buy, sell, and transfer ERC-721 tokens, which represent artworks in the form of an image, audio, or video file. It is important to clarify that ownership of the ERC-721 token proves ownership of the artwork it represents. It's similar to owning a deed to a house in that anyone can still see the house, it could appreciate or depreciate in value, but the one who owns the deed owns the house and can sell if they want.
@@ -6,6 +6,20 @@ OpenMint is a [dapp](https://www.investopedia.com/terms/d/decentralized-applica
 OpenMint utilizes the powerful nature of [Moralis](https://moralis.io/) which takes the place of writing backend infrastructure and allows the dapp to easily populate a database using user input, emitted events in smart contracts, and balances in each user's [MetaMask](https://metamask.io/) wallet.
 
 This version of OpenMint was designed to run on Ethereum but can be configured to run on most other EVM (Ethereum Virtual Machine) compatible chains such as Binance Smart Chain or Polygon (previously Matic Network).
+
+### Visit OpenMint Testnet
+OpenMint is currently on Binance Smart Chain Testnet. To interact with, follow these steps:
+
+ - Open up your MetaMask wallet and click on the current network, then click on "Custom RPC" at the bottom of the dropdown.
+ - Enter the follow information in the corresponding input fields:
+   -  **Network Name:** BSC Testnet 
+   -  **New RPC URL:** https://data-seed-prebsc-1-s1.binance.org:8545/
+   -  **Chain ID:** 97
+   -  **Currency Symbol:** BNB
+   -  **Block Explorer URL:** https://testnet.bscscan.com
+ - You are now connected to BSC Testnet, now you need some test BNB to interact with OpenMint.
+   -  Here is the [BSC Faucet for test BNB](https://testnet.binance.org/faucet-smart), you can only get 1 test BNB every 24 hours via this faucet.
+ - Now that your wallet has some test BNB, you [click here to interact with OpenMint](https://ty-sir.github.io/client).
 
 ### Features
 
