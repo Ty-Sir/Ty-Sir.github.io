@@ -17,7 +17,7 @@ OpenMint is currently on Binance Smart Chain Testnet. To interact with, follow t
    -  **Block Explorer URL:** https://testnet.bscscan.com
  - You are now connected to BSC Testnet, now you need some test BNB to interact with OpenMint.
    -  Here is the [BSC Faucet for test BNB](https://testnet.binance.org/faucet-smart), you can only get 1 test BNB every 24 hours via this faucet.
- - Now that your wallet has some test BNB, you [click here to interact with OpenMint](https://ty-sir.github.io/client).
+ - Now that your wallet has some test BNB, [click here to interact with OpenMint](https://ty-sir.github.io/client).
 
 ### Features
 
