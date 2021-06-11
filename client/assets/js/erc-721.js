@@ -430,7 +430,7 @@ async function uploadToDB(tokenId, nftMetadataPath, nftPath){
       confetti({
         zIndex: 9999
       });
-      $('#successfulText').html('<a href="http://localhost:8000/profile.html?address='+user.attributes.ethAddress+'">Click here to view.</a> <a href="erc-721.html">Or click here to make another one.</a>');
+      $('#successfulText').html('<a href="https://ty-sir.github.io/client/profile.html?address='+user.attributes.ethAddress+'">Click here to view.</a> <a href="erc-721.html">Or click here to make another one.</a>');
     }
 
   } catch (err) {
@@ -458,7 +458,7 @@ function setArtForSale(tokenId){
       confetti({
         zIndex: 9999
       });
-      $('#successfulText').html('<a href="http://localhost:8000/profile.html?address='+user.attributes.ethAddress+'">Click here to view.</a> <a href="erc-721.html">Or click here to make another one.</a>');
+      $('#successfulText').html('<a href="https://ty-sir.github.io/client/profile.html?address='+user.attributes.ethAddress+'">Click here to view.</a> <a href="erc-721.html">Or click here to make another one.</a>');
     } catch(err){
       alert(err.message);
       $('#setOffer').prop('disabled', false);
