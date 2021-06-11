@@ -23,7 +23,7 @@ $('#searchInput').on('keyup',(e)=>{
   let inputCheck = $('#searchInput').val().replace(/\s/g, '');
   $('#searchInput').tooltip('hide');
   if(e.which == 13  && inputCheck !== ''){
-    window.location.assign(`http://localhost:8000/search.html?query=${input}`);
+    window.location.assign(`https://ty-sir.github.io/client/search.html?query=${input}`);
   } else if(e.which == 13  && inputCheck == ''){
     $('#searchInput').prop('data-toggle', 'tooltip');
     $('#searchInput').prop('data-placement', 'bottom');
