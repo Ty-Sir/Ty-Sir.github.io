@@ -7,7 +7,7 @@ OpenMint utilizes the powerful nature of [Moralis](https://moralis.io/) which ta
 
 This version of OpenMint was designed to run on Ethereum but can be configured to run on most other EVM (Ethereum Virtual Machine) compatible chains such as Binance Smart Chain or Polygon (previously Matic Network).
 
-### Visit OpenMint Testnet
+### Visit OpenMint-Testnet
 OpenMint is currently on Binance Smart Chain Testnet. To interact with, follow these steps:
 
  - Open up your MetaMask wallet and click on the current network, then click on "Custom RPC" at the bottom of the dropdown.
