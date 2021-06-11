@@ -20,6 +20,7 @@ $(document).ready(async function(){
   openMintTokenInstance = new web3.eth.Contract(abi.OpenMintToken, openMintTokenAddress);
   openMintMarketplaceInstance = new web3.eth.Contract(abi.OpenMintMarketplace, openMintMarketplaceAddress);
   bnbPrice = await getBnbPrice();
+  console.log(bnbPrice);
   checkIfApproved();
 });
 
