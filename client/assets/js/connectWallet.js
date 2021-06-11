@@ -143,7 +143,7 @@ async function logout(){
     if(loggedOut){
       initUser();
     }
-    window.location.href="index.html";
+    window.location.href="ty-sir.github.io/client/index.html";
   } catch (error) {
     alert(error.message)
   }

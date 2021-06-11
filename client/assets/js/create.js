@@ -4,7 +4,7 @@ Moralis.serverURL = 'https://l5qznev3yhuw.moralis.io:2053/server'; //Server url 
 let user = Moralis.User.current();
 
 $('#singleButton').click(() =>{
-  window.location.href='erc-721.html';
+  window.location.href='ty-sir.github.io/client/erc-721.html';
 });
 
 $('#multipleButton').click(() =>{
