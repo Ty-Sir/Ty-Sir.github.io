@@ -10,16 +10,16 @@ let web3;
 let nft;
 let cover;
 let royalty = 10;
-let ethPrice;
+let bnbPrice;
 const BASE_URL = "https://api.coingecko.com/api/v3";
-const ETH_USD_PRICE_URL = "/simple/price?ids=ethereum&vs_currencies=usd";
+const BNB_USD_PRICE_URL = "/simple/price?ids=binancecoin&vs_currencies=usd";
 console.log(user);
 
 $(document).ready(async function(){
   web3 = await Moralis.Web3.enable();
   openMintTokenInstance = new web3.eth.Contract(abi.OpenMintToken, openMintTokenAddress);
   openMintMarketplaceInstance = new web3.eth.Contract(abi.OpenMintMarketplace, openMintMarketplaceAddress);
-  ethPrice = await getEthPrice();
+  bnbPrice = await getBnbPrice();
   checkIfApproved();
 });
 
@@ -68,12 +68,12 @@ $('#goBackBtn').click(()=>{
   window.history.back();
 });
 
-async function getEthPrice(){
-  let ethPrice = BASE_URL + ETH_USD_PRICE_URL;
-  const response = await fetch(ethPrice);
+async function getBnbPrice(){
+  let bnbPrice = BASE_URL + BNB_USD_PRICE_URL;
+  const response = await fetch(bnbPrice);
   const data = await response.json();
-  let usdEthPrice = data.ethereum.usd;
-  return usdEthPrice;
+  let usdBnbPrice = data.binancecoin.usd;
+  return usdBnbPrice;
 };
 
 $(function () {
@@ -217,7 +217,7 @@ $('#onSaleSwitch').click(() =>{
     $('#unlockableSwitch').prop('checked', false);
     $('#unlockableContentText').val('');
     $('#salePriceInput').val('');
-    $('#saleProfit').html('0 ETH');
+    $('#saleProfit').html('0 BNB');
     $('#usdProfit').html('$0.00');
     $('#setApprovalBtn').css('display', 'none');
     $('#saveToIPFSBtn').prop('disabled', false);
@@ -231,8 +231,8 @@ $('#salePriceInput').keyup(() =>{
   let price = $('#salePriceInput').val();
 
   let profit = price - (price * .02);
-  $('#saleProfit').html(`${profit} ETH`);
-  let usdProfit = (profit * ethPrice).toFixed(2);
+  $('#saleProfit').html(`${profit} BNB`);
+  let usdProfit = (profit * bnbPrice).toFixed(2);
   $('#usdProfit').html(`$${usdProfit}`);
 
   let reg = /^\d{0,18}(\.\d{1,15})?$/;

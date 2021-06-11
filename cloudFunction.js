@@ -136,7 +136,7 @@ Moralis.Cloud.beforeSave("ArtworkPriceChanged", async (request) => {
   }
 });
 
-Moralis.Cloud.afterSave("EthNFTOwners", async (request) => {
+Moralis.Cloud.afterSave("BscNFTOwners", async (request) => {
   const query = new Moralis.Query("Artwork");
   query.equalTo("tokenAddress", request.object.get('token_address'));
   query.equalTo("nftId", request.object.get('token_id'));

@@ -2,7 +2,7 @@ Moralis.initialize("WrQJkJZs66S7Dp31Hm5Ujtn1o5uZ3pzZTmZmLOok"); // Application i
 Moralis.serverURL = 'https://l5qznev3yhuw.moralis.io:2053/server'; //Server url from moralis.io
 
 const BASE_URL = "https://api.coingecko.com/api/v3";
-const ETH_USD_PRICE_URL = "/simple/price?ids=ethereum&vs_currencies=usd";
+const BNB_USD_PRICE_URL = "/simple/price?ids=binancecoin&vs_currencies=usd";
 const openMintTokenAddress = "0x8B5245a0a1b6e586dfADB9b47b33166772291a77";
 const openMintMarketplaceAddress = "0x5b0Effca5f0d56F2437AF15be7aa2321a28Ec3A8";
 const paymentGatewayAddress = "0x8Eb44f3EfF780c99C214b3684723aCF6c4419a04";
@@ -21,7 +21,7 @@ $(document).ready(async function(){
   openMintMarketplaceInstance = new web3.eth.Contract(abi.OpenMintMarketplace, openMintMarketplaceAddress);
   paymentGatewayInstance = new web3.eth.Contract(abi.PaymentGateway, paymentGatewayAddress);
   ifAddressNotInDatabase(address);
-  ethPrice = await getEthPrice();
+  bnbPrice = await getBnbPrice();
   getActiveOwnedArt();
   getInactiveOwnedArt();
   getProfileDetails();
@@ -134,12 +134,12 @@ $('#connectWalletModalBtn').click(async () =>{
   }
 });
 
-async function getEthPrice(){
-  let ethPrice = BASE_URL + ETH_USD_PRICE_URL;
-  const response = await fetch(ethPrice);
+async function getBnbPrice(){
+  let bnbPrice = BASE_URL + ETH_USD_PRICE_URL;
+  const response = await fetch(bnbPrice);
   const data = await response.json();
-  let usdEthPrice = data.ethereum.usd;
-  return Number(usdEthPrice);
+  let usdBnbPrice = data.binancecoin.usd;
+  return Number(usdBnbPrice);
 };
 
 function displayProfilePhotoAndBadge(profilePhoto, amountSold){
@@ -350,9 +350,9 @@ $('#tipInput').keyup(async() =>{
   let reg = /^\d{0,18}(\.\d{1,15})?$/;
   let tip = $('#tipInput').val();
   tip = tip.replace(/^0+/, '').replace(/\.?0+$/, '');
-  let tipInUsd = (tip * ethPrice).toFixed(2);
+  let tipInUsd = (tip * bnbPrice).toFixed(2);
 
-  $('#tipAmountInEth').html(`${tip} ETH`);
+  $('#tipAmountInEth').html(`${tip} BNB`);
   $('#tipAmountInUsd').html(`($${tipInUsd})`);
 
   if(tip !== '' && reg.test(tip)){
@@ -372,7 +372,7 @@ $('#tipInput').keyup(async() =>{
 $('#tipModal').on('hidden.bs.modal', function (e) {
   $('#tipInput').val('');
   $('#tipRegexMessage').html('');
-  $('#tipAmountInEth').html('0 ETH');
+  $('#tipAmountInEth').html('0 BNB');
   $('#tipAmountInUsd').html('$(0.00)');
 
   $('#confirmTipBtn').prop('disabled', true);
@@ -396,7 +396,7 @@ async function sendTipToContract(toAddress, tipInWei){
                                       <span class="sr-only">Loading...</span>
                                     </div>`)
   try {
-    await paymentGatewayInstance.methods.sendPayment(toAddress).send({from: ethereum.selectedAddress, value: tipInWei});
+    await paymentGatewayInstance.methods.sendPayment(toAddress).send({from: user.attributes.ethAddress, value: tipInWei});
     $('#tipStatus').removeClass('text-danger');
     $('#tipStatus').addClass('text-success');
     $('#tipStatus').html('Succesfully sent tip');
@@ -413,7 +413,7 @@ async function sendTipToContract(toAddress, tipInWei){
 };
 
 async function getMyBalance(){
-  let myBalance = await paymentGatewayInstance.methods.balance().call({from: ethereum.selectedAddress});
+  let myBalance = await paymentGatewayInstance.methods.balance().call({from: user.attributes.ethAddress});
   let priceInEth = web3.utils.fromWei(myBalance, 'ether');
   return priceInEth;
 };
@@ -425,7 +425,7 @@ async function withdrawBtn(){
     let profit = await getMyBalance();
     if(profit > 0){
       $('#withdraw').css('display', 'block');
-      $('#amountToWithdraw').html(` ${profit} ETH`);
+      $('#amountToWithdraw').html(` ${profit} BNB`);
     } else{
       $('#withdraw').prop('disabled', true);
     }
@@ -435,7 +435,7 @@ async function withdrawBtn(){
 $("#withdraw").click(async function(){
   $('#withdrawModal').modal('show');
   let profit = await getMyBalance();
-  $('#withdrawText').html(`Confirm to withdraw your profits of <span class="sale-profit">${profit} ETH</span>`);
+  $('#withdrawText').html(`Confirm to withdraw your profits of <span class="sale-profit">${profit} BNB</span>`);
 });
 
 $('#confirmBtn').click(async ()=>{
@@ -452,12 +452,12 @@ async function withdrawProfits(){
                                       <span class="sr-only">Loading...</span>
                                     </div>`)
   try {
-    await paymentGatewayInstance.methods.withdraw().send({from: ethereum.selectedAddress});
+    await paymentGatewayInstance.methods.withdraw().send({from: user.attributes.ethAddress});
     $('#withdrawStatus').removeClass('text-danger');
     $('#withdrawStatus').addClass('text-success');
     $('#withdrawStatus').html('Succesfully withdrawn');
     $('#confirmBtn').html('Confirm');
-    $('#withdrawText').html(`Confirm to withdraw your profits of <span class="sale-profit">0 ETH</span>`);
+    $('#withdrawText').html(`Confirm to withdraw your profits of <span class="sale-profit">0 BNB</span>`);
     $('#withdraw').html('Withdraw');
     $('#withdraw').prop('disabled', true);
   } catch (err){
@@ -753,7 +753,7 @@ async function getActiveOwnedArt(){
         $('#name' + tokenAddress + id).html(name);
 
         let priceInEth = web3.utils.fromWei(price, 'ether');
-        $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${priceInEth} ETH</span>`);
+        $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${priceInEth} BNB</span>`);
         $('#button' + tokenAddress + id).html(`<a href="https://ty-sir.github.io/client/token.html?token=`+tokenAddress+id+`"><button class="btn btn-primary buy-btn">Buy</button></a>`);
       }
       darkmodeForDynamicContent();
@@ -908,7 +908,7 @@ async function getActiveMintedArt(){
         $('#name' + tokenAddress + id).html(name);
 
         let priceInEth = web3.utils.fromWei(price, 'ether');
-        $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${priceInEth} ETH</span>`);
+        $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${priceInEth} BNB</span>`);
         $('#button' + tokenAddress + id).html(`<a href="https://ty-sir.github.io/client/token.html?token=`+tokenAddress+id+`"><button class="btn btn-primary buy-btn">Buy</button></a>`);
       }
       darkmodeForDynamicContent();
@@ -958,7 +958,7 @@ async function getActiveLikedArt(){
         $('#name' + tokenAddress + id).html(name);
 
         let priceInEth = web3.utils.fromWei(price, 'ether');
-        $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${priceInEth} ETH</span>`);
+        $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${priceInEth} BNB</span>`);
         $('#button' + tokenAddress + id).html(`<a href="https://ty-sir.github.io/client/token.html?token=`+tokenAddress+id+`"><button class="btn btn-primary buy-btn">Buy</button></a>`);
       }
       darkmodeForDynamicContent();
@@ -1417,12 +1417,12 @@ function onModalClose(tokenAddress, id){
     $('.modals').empty();
     $('#changePriceInput' + tokenAddress + id).val('');
     $('#changePriceBtn' + tokenAddress + id).prop('disabled', true);
-    $('#changePriceSaleProfit' + tokenAddress + id).html('0 ETH');
+    $('#changePriceSaleProfit' + tokenAddress + id).html('0 BNB');
     $('#changePriceUSDProfit' + tokenAddress + id).html('$0.00');
 
     $('#salePriceInput' + tokenAddress + id).val('');
     $('#putOnSaleBtn' + tokenAddress + id).prop('disabled', true);
-    $('#saleProfit' + tokenAddress + id).html('0 ETH');
+    $('#saleProfit' + tokenAddress + id).html('0 BNB');
     $('#usdProfit' + tokenAddress + id).html('$0.00');
 
     $('#toAddressInput' + tokenAddress + id).val('');
@@ -1500,7 +1500,7 @@ function putOnSale(tokenAddress, id, royalty, creator){
       $('#notForSale' + tokenAddress + id).css('display', 'none');
 
       $('#forSale' + tokenAddress + id).css('display', 'block');
-      $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${price} ETH</span>`);
+      $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${price} BNB</span>`);
       $('#button' + tokenAddress + id).html(`<a href="https://ty-sir.github.io/client/token.html?token=`+tokenAddress+id+`"><button class="btn btn-primary buy-btn">Buy</button></a>`);
 
       $('#quickActions' + tokenAddress + id).html(` <a class="dropdown-item quick-action" id="changePriceQuickAction`+tokenAddress+id+`" data-toggle="modal" data-target="#changePriceModal`+tokenAddress+id+`">Change price</a>
@@ -1533,13 +1533,13 @@ function putForSaleInput(tokenAddress, id, royalty, creator){
 
     if(creator == user.attributes.ethAddress){
       let profit = price - (price * .02);
-      $('#saleProfit' + tokenAddress + id).html(`${profit} ETH`);
-      let usdProfit = (profit * ethPrice).toFixed(2);
+      $('#saleProfit' + tokenAddress + id).html(`${profit} BNB`);
+      let usdProfit = (profit * bnbPrice).toFixed(2);
       $('#usdProfit' + tokenAddress + id).html(`$${usdProfit}`);
     } else{
       let profit = price - (price * .02) - (price * (royalty/100));
-      $('#saleProfit' + tokenAddress + id).html(`${profit} ETH`);
-      let usdProfit = (profit * ethPrice).toFixed(2);
+      $('#saleProfit' + tokenAddress + id).html(`${profit} BNB`);
+      let usdProfit = (profit * bnbPrice).toFixed(2);
       $('#usdProfit' + tokenAddress + id).html(`$${usdProfit}`);
     }
   });
@@ -1609,7 +1609,7 @@ function changePriceFrontEnd(tokenAddress, id, royalty, creator){
       $('#notForSale' + tokenAddress + id).css('display', 'none');
 
       $('#forSale' + tokenAddress + id).css('display', 'block');
-      $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${price} ETH</span>`);
+      $('#forSale' + tokenAddress + id).html(`<span class="for-sale-text">${price} BNB</span>`);
       $('#button' + tokenAddress + id).html(`<a href="https://ty-sir.github.io/client/token.html?token=`+tokenAddress+id+`"><button class="btn btn-primary buy-btn">Buy</button></a>`);
 
       $('#quickActions' + tokenAddress + id).html(` <a class="dropdown-item quick-action" id="changePriceQuickAction`+tokenAddress+id+`" data-toggle="modal" data-target="#changePriceModal`+tokenAddress+id+`">Change price</a>
@@ -1642,13 +1642,13 @@ function changePriceInput(tokenAddress, id, royalty, creator){
 
     if(creator == user.attributes.ethAddress){
       let profit = price - (price * .02);
-      $('#changePriceSaleProfit' + tokenAddress + id).html(`${profit} ETH`);
-      let usdProfit = (profit * ethPrice).toFixed(2);
+      $('#changePriceSaleProfit' + tokenAddress + id).html(`${profit} BNB`);
+      let usdProfit = (profit * bnbPrice).toFixed(2);
       $('#changePriceUSDProfit' + tokenAddress + id).html(`$${usdProfit}`);
     } else{
       let profit = price - (price * .02) - (price * (royalty/100));
-      $('#changePriceSaleProfit' + tokenAddress + id).html(`${profit} ETH`);
-      let usdProfit = (profit * ethPrice).toFixed(2);
+      $('#changePriceSaleProfit' + tokenAddress + id).html(`${profit} BNB`);
+      let usdProfit = (profit * bnbPrice).toFixed(2);
       $('#changePriceUSDProfit' + tokenAddress + id).html(`$${usdProfit}`);
     }
   });
@@ -1701,12 +1701,12 @@ function toAddressInput(tokenAddress, id){
       $('#transferTokenBtn' + tokenAddress + id).prop('disabled', false);
       $('#regexMessage' + tokenAddress + id).removeClass('text-danger');
       $('#regexMessage' + tokenAddress + id).addClass('text-success');
-      $('#regexMessage' + tokenAddress + id).html('Valid ethereum address')
+      $('#regexMessage' + tokenAddress + id).html('Valid binance address')
     } else{
       $('#transferTokenBtn' + tokenAddress + id).prop('disabled', true);
       $('#regexMessage' + tokenAddress + id).removeClass('text-success');
       $('#regexMessage' + tokenAddress + id).addClass('text-danger');
-      $('#regexMessage' + tokenAddress + id).html('Invalid ethereum address')
+      $('#regexMessage' + tokenAddress + id).html('Invalid binance address')
     }
   });
 };
@@ -1828,13 +1828,13 @@ function changePriceModalHTML(tokenAddress, id){
                       <form>
                         <div id="changePriceInputGroup`+tokenAddress+id+`" class="price-input-group">
                           <div class="input-group">
-                            <input id="changePriceInput`+tokenAddress+id+`" type="text" class="form-control input-styling" placeholder="Enter price in ETH" aria-label="ether amount">
+                            <input id="changePriceInput`+tokenAddress+id+`" type="text" class="form-control input-styling" placeholder="Enter price in BNB" aria-label="ether amount">
                           </div>
 
                           <div class="price-calculator price-info">
                             <span>Service Fee Upon Sale <span>2%</span></span><br>
                             <span id="ifOwnerNotCreator`+tokenAddress+id+`">Creator's Royalty <span id="royalty`+tokenAddress+id+`"></span><br></span>
-                            <span>Your profit will be: <span id="changePriceSaleProfit`+tokenAddress+id+`" class="sale-profit">0 ETH</span> <span id="changePriceUSDProfit`+tokenAddress+id+`">$0.00</span></span>
+                            <span>Your profit will be: <span id="changePriceSaleProfit`+tokenAddress+id+`" class="sale-profit">0 BNB</span> <span id="changePriceUSDProfit`+tokenAddress+id+`">$0.00</span></span>
                           </div>
                         </div>
                       </form>
@@ -1867,13 +1867,13 @@ let putForSaleModal =`<div class="modal fade" id="putForSaleModal`+tokenAddress+
                               <form>
                                 <div id="priceInputGroup`+tokenAddress+id+`" class="price-input-group">
                                   <div class="input-group">
-                                    <input id="salePriceInput`+tokenAddress+id+`" type="text" class="form-control input-styling" placeholder="Enter price in ETH" aria-label="ether amount">
+                                    <input id="salePriceInput`+tokenAddress+id+`" type="text" class="form-control input-styling" placeholder="Enter price in BNB" aria-label="ether amount">
                                   </div>
 
                                   <div class="price-calculator price-info">
                                     <span>Service Fee Upon Sale <span>2%</span></span><br>
                                     <span id="ifOwnerNotCreator`+tokenAddress+id+`">Creator's Royalty <span id="royalty`+tokenAddress+id+`"></span><br></span>
-                                    <span>Your profit will be: <span id="saleProfit`+tokenAddress+id+`" class="sale-profit">0 ETH</span> <span id="usdProfit`+tokenAddress+id+`">$0.00</span></span>
+                                    <span>Your profit will be: <span id="saleProfit`+tokenAddress+id+`" class="sale-profit">0 BNB</span> <span id="usdProfit`+tokenAddress+id+`">$0.00</span></span>
                                   </div>
                                 </div>
                               </form>
