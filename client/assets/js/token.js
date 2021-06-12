@@ -1076,8 +1076,8 @@ function transferToken(tokenAddress, id){
       $('#transferTokenBtn' + tokenAddress + id).removeClass('btn-primary');
       $('#transferTokenBtn' + tokenAddress + id).addClass('btn-success');
 
-      $('#ownerNameAnchor' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile.html?address=" + toAddress);
-      $('#owner' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile.html?address=" + toAddress);
+      $('#ownerNameAnchor' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile?address=" + toAddress);
+      $('#owner' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile?address=" + toAddress);
       $('#ownerSpinner' + tokenAddress + id).css('display', 'block');
       newOwnerPhotoAndNameQuery(tokenAddress, id, toAddress);
 
@@ -1198,8 +1198,8 @@ async function buy(tokenAddress, id, price, royalty, creator){
           $('#unlockableContentBtn' + tokenAddress + id).html('Unlocked');
           $('#unlockableContentBtn' + tokenAddress + id).addClass('magnify');
           let toAddress = user.attributes.ethAddress;
-          $('#ownerNameAnchor' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile.html?address=" + toAddress);
-          $('#owner' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile.html?address=" + toAddress);
+          $('#ownerNameAnchor' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile?address=" + toAddress);
+          $('#owner' + tokenAddress + id).attr('href', "https://ty-sir.github.io/client/profile?address=" + toAddress);
           $('#ownerSpinner' + tokenAddress + id).css('display', 'block');
           newOwnerPhotoAndNameQuery(tokenAddress, id, toAddress);
           customConfetti();
@@ -1310,7 +1310,7 @@ function cardDiv(tokenAddress, id, owner, creator, path){
                     <div class="top-row-token-page">
                       <div class="owner-div row">
                         <div class="owner-photo">
-                          <a class="anchor" id='owner`+tokenAddress+id+`' href="https://ty-sir.github.io/client/profile.html?address=`+owner+`"><img loading="lazy" class="owner shadow-sm" id="ownerPhoto`+tokenAddress+id+`" src="" width="40" alt="creator photo">
+                          <a class="anchor" id='owner`+tokenAddress+id+`' href="https://ty-sir.github.io/client/profile?address=`+owner+`"><img loading="lazy" class="owner shadow-sm" id="ownerPhoto`+tokenAddress+id+`" src="" width="40" alt="creator photo">
                             <span id="ownerSpinner`+tokenAddress+id+`" class="spinner-grow text-light" style="width: 40px; height: 40px;" role="status">
                               <span class="sr-only">Loading...</span>
                             </span>
@@ -1320,7 +1320,7 @@ function cardDiv(tokenAddress, id, owner, creator, path){
                           </a>
                         </div>
                         <div class="name">
-                          <a class="anchor" id="ownerNameAnchor`+tokenAddress+id+`" href="https://ty-sir.github.io/client/profile.html?address=`+owner+`">
+                          <a class="anchor" id="ownerNameAnchor`+tokenAddress+id+`" href="https://ty-sir.github.io/client/profile?address=`+owner+`">
                             <div class="owner-name" id="ownerName`+tokenAddress+id+`"></div>
                           </a>
                           <div class="creator sub-text">Owner</div>
@@ -1368,7 +1368,7 @@ function cardDiv(tokenAddress, id, owner, creator, path){
 
                     <div class="creator-div row">
                       <div class="creator-photo">
-                        <a class="anchor" href="https://ty-sir.github.io/client/profile.html?address=`+creator+`"><img loading="lazy" class="creator shadow-sm" id="creatorPhoto`+tokenAddress+id+`" src="" width="40" alt="creator photo">
+                        <a class="anchor" href="https://ty-sir.github.io/client/profile?address=`+creator+`"><img loading="lazy" class="creator shadow-sm" id="creatorPhoto`+tokenAddress+id+`" src="" width="40" alt="creator photo">
                           <span id="creatorSpinner`+tokenAddress+id+`" class="spinner-grow text-light" style="width: 40px; height: 40px;" role="status">
                             <span class="sr-only">Loading...</span>
                           </span>
@@ -1378,7 +1378,7 @@ function cardDiv(tokenAddress, id, owner, creator, path){
                         </a>
                       </div>
                       <div class="name">
-                        <a class="anchor" href="https://ty-sir.github.io/client/profile.html?address=`+creator+`">
+                        <a class="anchor" href="https://ty-sir.github.io/client/profile?address=`+creator+`">
                           <div class="creator-name" id="creatorName`+tokenAddress+id+`"></div>
                         </a>
                         <div class="creator sub-text">Creator</div>
