@@ -143,7 +143,7 @@ async function logout(){
     if(loggedOut){
       initUser();
     }
-    window.location.href="index.html";
+    window.location.href="index";
   } catch (error) {
     alert(error.message)
   }
