@@ -127,7 +127,7 @@ function displaySellerRankInNav(){
 };
 
 $('#myProfile').click(()=>{
-  const base = 'https://ty-sir.github.io/client/profile.html?address=';
+  const base = 'https://ty-sir.github.io/client/profile?address=';
   let destination = user.attributes.ethAddress.toLowerCase();
   let profile = base + destination;
   $('#myProfile').attr('href', profile);
