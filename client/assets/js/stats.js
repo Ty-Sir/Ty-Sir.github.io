@@ -1,18 +1,160 @@
-Moralis.initialize("WrQJkJZs66S7Dp31Hm5Ujtn1o5uZ3pzZTmZmLOok"); // Application id from moralis.io
-Moralis.serverURL = 'https://l5qznev3yhuw.moralis.io:2053/server'; //Server url from moralis.io
+Moralis.initialize("SIPW4jCaU0ViJhBqKyPnaBt7LnO1g9M5gIWkLcUy"); // Application id from moralis.io
+Moralis.serverURL = 'https://lxsxj1tvocfd.moralis.io:2053/server'; //Server url from moralis.io
 
 const user = Moralis.User.current();
+let web3;
+let bnbPrice;
+const BASE_URL = "https://api.coingecko.com/api/v3";
+const BNB_USD_PRICE_URL = "/simple/price?ids=binancecoin&vs_currencies=usd";
 
-$(document).ready(()=>{
+$(document).ready(async ()=>{
+  web3 = await Moralis.Web3.enable();
+  bnbPrice = await getBnbPrice();
+  loadInfo();
   $('[data-toggle="tooltip"]').tooltip();
-  getAmountSold();
 });
 
-// if(user == null){
-//   $('.container').html(`<p id="notYetConnectedText">Please connect wallet to view your stats</p>`);
-//   $('#ifWalletNotConnectedModal').modal('show');
-// };
+function loadInfo(){
+  getProfits();
+  getRoyaltiesReceived();
+  getTipsReceived();
+  getNextBadgePreview();
+  getAmountSold();
+  getAmountBought();
+  getAmountMinted();
+  getLikesReceived();
+  getCurrentEncouragements();
+  getFollowerCount();
+  getFollowingCount();
+  getDateJoined();
+};
 
+async function getBnbPrice(){
+  let bnbPrice = BASE_URL + BNB_USD_PRICE_URL;
+  const response = await fetch(bnbPrice);
+  const data = await response.json();
+  let usdBnbPrice = data.binancecoin.usd;
+  return usdBnbPrice;
+};
+
+if(user == null){
+  $('.container').html(`<p id="notYetConnectedText">Please connect wallet to view your stats</p>`);
+  $('#ifWalletNotConnectedModal').modal('show');
+};
+
+//button in connect modal
+$('#connectWalletModalBtn').click(async ()=>{
+  $('#connectWalletModalBtn').prop('disabled', true);
+  $('#connectWalletModalBtn').html(`Connecting... <div class="spinner-border spinner-border-sm text-light" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                      </div>`);
+  //this is the one in the nav
+  $('#connectWalletBtn').html(`Connecting... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                  <span class="sr-only">Loading...</span>`);
+  try{
+    let currentUser = await Moralis.Web3.authenticate();
+    if(currentUser){
+      location.reload();
+    }
+  } catch (error) {
+    alert(error.message);
+    console.log(error);
+    $('#connectWalletModalBtn').prop('disabled', false);
+    $('#connectWalletModalBtn').html('Connect Wallet');
+    $('#connectWalletBtn').html('Connect');
+  }
+});
+
+$('#goBackBtn').click(()=>{
+  window.history.back();
+});
+
+async function getProfits(){
+  const params = {ethAddress: user.attributes.ethAddress};
+  let userInfo = await Moralis.Cloud.run('getUser', params);
+  let totalProfit = userInfo.totalProfit;
+  if(totalProfit == undefined){
+    $('#profitsFromSelling').html(`0 BNB`);
+    $('#profitsFromSellingUSD').html(`($0.00)`);
+  } else{
+    totalProfit = userInfo.totalProfit.toString();
+    let profitInBnb = web3.utils.fromWei(totalProfit, 'ether');
+    let priceInUsd = (profitInBnb * bnbPrice).toFixed(2);
+    $('#profitsFromSelling').html(`${profitInBnb} BNB`);
+    $('#profitsFromSellingUSD').html(`($${priceInUsd})`);
+  }
+};
+
+async function getRoyaltiesReceived(){
+  const params = {ethAddress: user.attributes.ethAddress};
+  let userInfo = await Moralis.Cloud.run('getUser', params);
+  let totalRoyalties = userInfo.totalRoyalties;
+  if(totalRoyalties == undefined){
+    $('#royaltiesReceived').html(`0 BNB`);
+    $('#royaltiesReceivedUSD').html(`($0.00)`);
+  } else{
+    totalRoyalties = userInfo.totalRoyalties.toString();
+    let royaltiesInBnb = web3.utils.fromWei(totalRoyalties, 'ether');
+    let priceInUsd = (royaltiesInBnb * bnbPrice).toFixed(2);
+    $('#royaltiesReceived').html(`${royaltiesInBnb} BNB`);
+    $('#royaltiesReceivedUSD').html(`($${priceInUsd})`);
+  }
+};
+
+async function getTipsReceived(){
+  const params = {ethAddress: user.attributes.ethAddress};
+  let userInfo = await Moralis.Cloud.run('getUser', params);
+  let totalTips = userInfo.totalTips;
+  if(totalTips == undefined){
+    $('#tipsReceived').html(`0 BNB`);
+    $('#tipsReceivedUSD').html(`($0.00)`);
+  } else{
+    totalTips = userInfo.totalTips.toString();
+    let tipsInBnb = web3.utils.fromWei(totalTips, 'ether');
+    let priceInUsd = (tipsInBnb * bnbPrice).toFixed(2);
+    $('#tipsReceived').html(`${tipsInBnb} BNB`);
+    $('#tipsReceivedUSD').html(`($${priceInUsd})`);
+  }
+};
+
+async function getNextBadgePreview(){
+  const params = {ethAddress: user.attributes.ethAddress};
+  let userInfo = await Moralis.Cloud.run('getUser', params);
+  let amountSold = userInfo.amountSold;
+
+  nextBadge(amountSold);
+};
+
+function nextBadge(amountSold){
+  if (amountSold == undefined){
+    $('#amountTillNextBadge').html(1);
+    $('#nextBadge').attr('src', './assets/images-icons/oneSale.png');
+  } else if(amountSold >= 1 && amountSold <= 4){
+    $('#amountTillNextBadge').html(5 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/fiveSales.png');
+  } else if(amountSold >= 5 && amountSold <= 9){
+    $('#amountTillNextBadge').html(10 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/tenSales.png');
+  } else if(amountSold >= 10 && amountSold <= 19){
+    $('#amountTillNextBadge').html(20 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/twentySales.png');
+  } else if(amountSold >= 20 && amountSold <= 34){
+    $('#amountTillNextBadge').html(35 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/thirtyfiveSales.png');
+  } else if(amountSold >= 35 && amountSold <= 49){
+    $('#amountTillNextBadge').html(50 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/fiftySales.png');
+  } else if(amountSold >= 50 && amountSold <= 74){
+    $('#amountTillNextBadge').html(75 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/seventyfiveSales.png');
+  } else if(amountSold >= 75 && amountSold <= 99){
+    $('#amountTillNextBadge').html(100 - amountSold);
+    $('#nextBadge').attr('src', './assets/images-icons/hundredPlusSales.png');
+  } else if(amountSold >= 100){
+    $('#amountTillNextBadge').html(0);
+    $('#nextBadge').attr('src', './assets/images-icons/hundredPlusSales.png');
+  }
+};
 
 async function getAmountSold(){
   const params = {ethAddress: user.attributes.ethAddress};
@@ -23,5 +165,91 @@ async function getAmountSold(){
   } else{
     $('#amountSold').html(amountSold);
   }
-  console.log(amountSold);
+};
+
+async function getAmountBought(){
+  const params = {ethAddress: user.attributes.ethAddress};
+  let userInfo = await Moralis.Cloud.run('getUser', params);
+  let amountBought = userInfo.amountBought;
+  if(amountBought == undefined){
+    $('#amountBought').html(0);
+  } else{
+    $('#amountBought').html(amountBought);
+  }
+};
+
+async function getAmountMinted(){
+  let artwork = await Moralis.Cloud.run('getArtwork');
+  const count = artwork.filter(item => item.creator.toLowerCase() == user.attributes.ethAddress.toLowerCase()).length;
+  $('#amountMinted').html(count);
+};
+
+async function getLikesReceived(){
+  try{
+    let totalLikes = 0;
+    let artwork = await Moralis.Cloud.run('getArtwork');
+    for (i = 0; i < artwork.length; i++) {
+      if(artwork[i].creator.toLowerCase() == user.attributes.ethAddress.toLowerCase()){
+        let likes = artwork[i].likes;
+        totalLikes += +likes;
+        $('#likesReceived').html(totalLikes);
+      } else {
+        $('#likesReceived').html(0);
+      }
+    }
+  } catch (error){
+    console.log(error)
+  }
+};
+
+async function getCurrentEncouragements(){
+  try{
+    let totalEncouragements = 0;
+    let artwork = await Moralis.Cloud.run('getArtwork');
+    for (i = 0; i < artwork.length; i++) {
+      if(artwork[i].currentOwner.toLowerCase() == user.attributes.ethAddress.toLowerCase()){
+        let encouragements = artwork[i].encouragements;
+        totalEncouragements += +encouragements;
+        if(encouragements == undefined){
+          $('#currentEncouragements').html(0);
+        } else{
+          $('#currentEncouragements').html(totalEncouragements);
+        }
+      } else {
+        $('#currentEncouragements').html(0);
+      }
+    }
+  } catch (error){
+    console.log(error)
+  }
+};
+
+async function getFollowerCount(){
+  const params = {ethAddress: user.attributes.ethAddress}
+  let followers = await Moralis.Cloud.run('getFollowers', params);
+  if(followers == undefined){
+    $('#amountOfFollowers').html(0);
+  } else{
+    let followerCount = followers.length;
+    $('#amountOfFollowers').html(followerCount);
+  }
+};
+
+async function getFollowingCount(){
+  const params = {ethAddress: user.attributes.ethAddress}
+  let following = await Moralis.Cloud.run('getFollowing', params);
+  if(following == undefined){
+    $('#amountFollowing').html(0);
+  } else{
+    let followingCount = following.length;
+    $('#amountFollowing').html(followingCount);
+  }
+};
+
+function getDateJoined(){
+  let joined = user.attributes.createdAt;
+  let day = joined.getDate();
+  let month = joined.getMonth() + 1;
+  let year = joined.getFullYear();
+  $('#dateJoined').html(`${day}.${month}.${year}`);
 };

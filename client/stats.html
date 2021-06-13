@@ -103,25 +103,35 @@
         </header>
         <p class="subheader">Keep track of your profits, amount sold, and more.</p>
 
-        <div>
+        <div class="info">
 
           <div class="group">
-            <span class="label"> <span id="amountTillNextBadge"></span> more sales till new badge:</span>
-            <span id="nextBadge"> <img src="" width="20px"> </span>
+            <span class="label">Profit From Selling</span>
+            <div class="amounts">
+              <span class="sub-group" id="profitsFromSelling"></span><br>
+              <span class="usd-amount" id="profitsFromSellingUSD"></span>
+            </div>
           </div>
 
           <div class="group">
-            <span class="label">Profits From Selling</span>
-            <span class="sub-group" id="profitsFromSelling"><br>
-              <span class="usd-amount" id="profitsFromSellingUSD"></span>
-            </span>
+            <span class="label">Royalties Received</span>
+            <div class="amounts">
+              <span class="sub-group" id="royaltiesReceived"></span><br>
+              <span class="usd-amount" id="royaltiesReceivedUSD"></span>
+            </div>
           </div>
 
           <div class="group">
             <span class="label">Tips Received</span>
-            <span class="sub-group" id="tipsReceived"><br>
+            <div class="amounts">
+              <span class="sub-group" id="tipsReceived"></span> <br>
               <span class="usd-amount" id="tipsReceivedUSD"></span>
-            </span>
+            </div>
+          </div>
+
+          <div class="group">
+            <span class="label">Sell <span id="amountTillNextBadge"></span> more to get this badge:</span>
+            <img id="nextBadge" src="" width="20px">
           </div>
 
           <div class="group">

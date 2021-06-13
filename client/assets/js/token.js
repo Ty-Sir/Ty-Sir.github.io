@@ -136,7 +136,7 @@ async function getActiveArtworkInfo(){
             $('.if-owned').css('display', 'none');
             $(".if-onsale").css('display', 'block');
             $(".not-onsale").css('display', 'none');
-            buy(tokenAddress, id, price, royalty, creator);
+            buy(tokenAddress, id, price, royalty, creator, owner);
           }
 
           let priceInEth = web3.utils.fromWei(price, 'ether');
@@ -182,7 +182,7 @@ async function getActiveArtworkInfo(){
             $('.if-owned').css('display', 'none');
             $(".if-onsale").css('display', 'block');
             $(".not-onsale").css('display', 'none');
-            buy(tokenAddress, id, price, royalty, creator);
+            buy(tokenAddress, id, price, royalty, creator, owner);
           }
         }
       };
@@ -1170,7 +1170,7 @@ async function newOwnerPhotoAndNameQuery(tokenAddress, id, toAddress){
   }
 };
 
-async function buy(tokenAddress, id, price, royalty, creator){
+async function buy(tokenAddress, id, price, royalty, creator, owner){
   $('#buy' + tokenAddress + id).click(async function(){
     if(user){
       $('#buy' + tokenAddress + id).prop('disabled', true);
@@ -1204,6 +1204,10 @@ async function buy(tokenAddress, id, price, royalty, creator){
           newOwnerPhotoAndNameQuery(tokenAddress, id, toAddress);
           customConfetti();
           getUnlockableContentFrontEnd(tokenAddress, id, toAddress);
+          setAmountBought();
+          setAmountSold(owner);
+          setTotalRoyalty(price, royalty, creator);
+          setTotalProfit(price, royalty, creator, owner);
           $('#quickActions' + tokenAddress + id).html(` <a class="dropdown-item quick-action" id="putForSaleQuickAction`+tokenAddress+id+`" data-toggle="modal" data-target="#putForSaleModal`+tokenAddress+id+`">Put for sale</a>
                                                         <a class="dropdown-item quick-action" id="transferTokenQuickAction`+tokenAddress+id+`" data-toggle="modal" data-target="#transferTokenModal`+tokenAddress+id+`">Transfer token</a>
                                                         <a class="dropdown-item quick-action" id="shareQuickAction`+tokenAddress+id+`" data-toggle="modal" data-target="#shareModal`+tokenAddress+id+`">Share</a>`
@@ -1218,6 +1222,36 @@ async function buy(tokenAddress, id, price, royalty, creator){
       $("#ifWalletNotConnectedModal").modal('show');
     }
   });
+};
+
+async function setAmountBought(){
+  const params = { ethAddress: user.attributes.ethAddress };
+  await Moralis.Cloud.run('incrementAmountBought', params);
+};
+
+async function setAmountSold(owner){
+  const params = { ethAddress: owner };
+  await Moralis.Cloud.run('incrementAmountSold', params);
+};
+
+async function setTotalRoyalty(price, royalty, creator){
+  let computeRoyalty = (Number(price) * royalty) / 100;
+  const params = {
+    toAddress: creator,
+    royaltyAmount: computeRoyalty
+   };
+  await Moralis.Cloud.run('setTotalRoyalties', params);
+};
+
+async function setTotalProfit(price, royalty, creator, owner){
+  let computeRoyalty = (Number(price) * royalty) / 100;
+  let computePublisherFee = (Number(price) * 0.02);
+  let computeProfit = Number(price) - computePublisherFee - computeRoyalty;
+  const params = {
+    toAddress: owner,
+    profitAmount: computeProfit
+   };
+  await Moralis.Cloud.run('setTotalProfit', params);
 };
 
 function randomInRange(min, max) {

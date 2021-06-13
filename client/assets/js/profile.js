@@ -397,6 +397,7 @@ async function sendTipToContract(toAddress, tipInWei){
                                     </div>`)
   try {
     await paymentGatewayInstance.methods.sendPayment(toAddress).send({from: user.attributes.ethAddress, value: tipInWei});
+    setTip(toAddress, tipInWei);
     $('#tipStatus').removeClass('text-danger');
     $('#tipStatus').addClass('text-success');
     $('#tipStatus').html('Succesfully sent tip');
@@ -410,6 +411,14 @@ async function sendTipToContract(toAddress, tipInWei){
     $('#tipStatus').html('Something went wrong');
     $('#confirmTipBtn').html('Send Tip');
   }
+};
+
+async function setTip(toAddress, tipInWei){
+  const params = {
+    toAddress: toAddress,
+    tipAmount: Number(tipInWei)
+  };
+  await Moralis.Cloud.run('setTotalTips', params);
 };
 
 async function getMyBalance(){
