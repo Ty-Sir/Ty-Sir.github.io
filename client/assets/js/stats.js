@@ -19,4 +19,5 @@ async function getAmountSold(){
   let userInfo = await Moralis.Cloud.run('getUser', params);
   let amountSold = userInfo.amountSold;
   $('#amountSold').html(amountSold);
+  console.log(amountSold);
 };
