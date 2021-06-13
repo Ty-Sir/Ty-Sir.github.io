@@ -11,8 +11,8 @@ let nft;
 let cover;
 let royalty = 10;
 let bnbPrice;
-const BASE_URL = "https://api.coingecko.com/api/v3";
-const BNB_USD_PRICE_URL = "/simple/price?ids=binancecoin&vs_currencies=usd";
+const BASE_URL = "https://api.1inch.exchange/v3.0/56/";
+const WBNB_TO_BUSD = "quote?fromTokenAddress=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&toTokenAddress=0xe9e7cea3dedca5984780bafc599bd69add087d56&amount=1000000000000000000";
 console.log(user);
 
 $(document).ready(async function(){
@@ -70,11 +70,11 @@ $('#goBackBtn').click(()=>{
 });
 
 async function getBnbPrice(){
-  let bnbPrice = BASE_URL + BNB_USD_PRICE_URL;
+  let bnbPrice = BASE_URL + WBNB_TO_BUSD;
   const response = await fetch(bnbPrice);
   const data = await response.json();
-  let usdBnbPrice = data.binancecoin.usd;
-  return usdBnbPrice;
+  const usdBnbPrice = web3.utils.fromWei(data.toTokenAmount, 'ether');
+  return Number(usdBnbPrice);
 };
 
 $(function () {

@@ -4,8 +4,8 @@ Moralis.serverURL = 'https://l5qznev3yhuw.moralis.io:2053/server'; //Server url 
 const user = Moralis.User.current();
 let web3;
 let bnbPrice;
-const BASE_URL = "https://api.coingecko.com/api/v3";
-const BNB_USD_PRICE_URL = "/simple/price?ids=binancecoin&vs_currencies=usd";
+const BASE_URL = "https://api.1inch.exchange/v3.0/56/";
+const WBNB_TO_BUSD = "quote?fromTokenAddress=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&toTokenAddress=0xe9e7cea3dedca5984780bafc599bd69add087d56&amount=1000000000000000000";
 
 $(document).ready(async ()=>{
   web3 = await Moralis.Web3.enable();
@@ -18,10 +18,10 @@ function loadInfo(){
   getProfits();
   getRoyaltiesReceived();
   getTipsReceived();
+  getTotalEarned();
   getNextBadgePreview();
   getAmountSold();
   getAmountBought();
-  getAmountMinted();
   getLikesReceived();
   getCurrentEncouragements();
   getFollowerCount();
@@ -30,11 +30,11 @@ function loadInfo(){
 };
 
 async function getBnbPrice(){
-  let bnbPrice = BASE_URL + BNB_USD_PRICE_URL;
+  let bnbPrice = BASE_URL + WBNB_TO_BUSD;
   const response = await fetch(bnbPrice);
   const data = await response.json();
-  let usdBnbPrice = data.binancecoin.usd;
-  return usdBnbPrice;
+  const usdBnbPrice = web3.utils.fromWei(data.toTokenAmount, 'ether');
+  return Number(usdBnbPrice);
 };
 
 if(user == null){
@@ -117,6 +117,29 @@ async function getTipsReceived(){
   }
 };
 
+async function getTotalEarned(){
+  const params = {ethAddress: user.attributes.ethAddress};
+  let userInfo = await Moralis.Cloud.run('getUser', params);
+  let totalTips = userInfo.totalTips;
+  if(totalTips == undefined){
+    totalTips = 0;
+  }
+  let totalRoyalties = userInfo.totalRoyalties;
+  if(totalRoyalties == undefined){
+    totalRoyalties = 0;
+  }
+  let totalProfit = userInfo.totalProfit;
+  if(totalProfit == undefined){
+    totalProfit = 0;
+  }
+  let total = totalTips + totalRoyalties + totalProfit;
+  total = total.toString();
+  let totalBnb = web3.utils.fromWei(total, 'ether');
+  let totalUsd = (totalBnb * bnbPrice).toFixed(2);
+  $('#total').html(`${totalBnb} BNB`);
+  $('#totalUSD').html(`($${totalUsd})`);
+};
+
 async function getNextBadgePreview(){
   const params = {ethAddress: user.attributes.ethAddress};
   let userInfo = await Moralis.Cloud.run('getUser', params);
@@ -176,12 +199,6 @@ async function getAmountBought(){
   } else{
     $('#amountBought').html(amountBought);
   }
-};
-
-async function getAmountMinted(){
-  let artwork = await Moralis.Cloud.run('getArtwork');
-  const count = artwork.filter(item => item.creator.toLowerCase() == user.attributes.ethAddress.toLowerCase()).length;
-  $('#amountMinted').html(count);
 };
 
 async function getLikesReceived(){

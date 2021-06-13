@@ -3,8 +3,8 @@ Moralis.serverURL = 'https://l5qznev3yhuw.moralis.io:2053/server'; //Server url 
 
 const user = Moralis.User.current();
 
-const BASE_URL = "https://api.coingecko.com/api/v3";
-const BNB_USD_PRICE_URL = "/simple/price?ids=binancecoin&vs_currencies=usd";
+const BASE_URL = "https://api.1inch.exchange/v3.0/56/";
+const WBNB_TO_BUSD = "quote?fromTokenAddress=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c&toTokenAddress=0xe9e7cea3dedca5984780bafc599bd69add087d56&amount=1000000000000000000";
 const openMintTokenAddress = "0x8B5245a0a1b6e586dfADB9b47b33166772291a77";
 const openMintMarketplaceAddress = "0x5b0Effca5f0d56F2437AF15be7aa2321a28Ec3A8";
 let openMintTokenInstance;
@@ -73,10 +73,10 @@ $('#connectWalletModalBtn').click(async () =>{
 });
 
 async function getBnbPrice(){
-  let bnbPrice = BASE_URL + BNB_USD_PRICE_URL;
+  let bnbPrice = BASE_URL + WBNB_TO_BUSD;
   const response = await fetch(bnbPrice);
   const data = await response.json();
-  let usdBnbPrice = data.binancecoin.usd;
+  const usdBnbPrice = web3.utils.fromWei(data.toTokenAmount, 'ether');
   return Number(usdBnbPrice);
 };
 
