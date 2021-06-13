@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/nav.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/create.css">
+    <link rel="stylesheet" href="assets/css/stats.css">
     <link rel="stylesheet" href="assets/css/basics.css">
     <link rel="icon" type="image/png" href="assets/images-icons/openMintLogo.png">
     <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
@@ -47,7 +47,7 @@
             <a class="nav-link" href="learn">Learn</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="create" href="create">CREATE<span class="sr-only">(current)</span></a>
+            <a class="nav-link" id="create" href="create">CREATE</a>
           </li>
           <li class="nav-item mr-1" id="connectWalletTag">
             <button type="button" class="btn btn-primary button-styling shadow-sm" id="connectWalletBtn">Connect</button>
@@ -62,7 +62,7 @@
               <img id="rankInNav" src="" width="12px" alt="seller badge">
             </a>
             <div class="dropdown-menu" aria-labelledby="profile">
-              <a class='dropdown-item' href="stats">My Stats</a>
+              <a class='dropdown-item' href="stats">My Stats<span class="sr-only">(current)</span></a>
               <a id="myProfile" class='dropdown-item'>My Profile</a>
               <a class='dropdown-item' href="edit-profile">Edit Profile</a>
               <hr>
@@ -81,29 +81,91 @@
       </div>
     </nav>
 
-    <div class="container">
-      <div class="make-nft">
-
-        <header>
-          Create with Open<span id="mint">Mint</span>
-        </header>
-
-        <div id="chooseStandard">
-          <p class="subheader">To begin, click/tap the button below.
-            <br>
-            Be sure to check out our <a href="learn">learn</a> section for FAQs.
-          </p>
-          <div class='button-wrapper'>
-            <button class="btn btn-light" id="singleButton">
-              <img src="assets/images-icons/oneOfOneTag.png" alt="a pink and blue gradient dog tag that says 1 of 1">
-              <div class="single-text type">
-                Single
-              </div>
-            </button>
+    <div id="ifWalletNotConnectedModal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header center-content">
+            <h5 class="modal-title">Must Connect Wallet To View Stats</h5>
+          </div>
+          <div class="modal-body center-content">
+            <button type="button" class="btn btn-secondary button-styling mr-2" id="goBackBtn">Go Back</button>
+            <button type="button" class="btn btn-primary button-styling" id="connectWalletModalBtn">Connect Wallet</button>
           </div>
         </div>
-
       </div>
+    </div>
+
+    <div class="container">
+
+      <div class="stats">
+        <header>
+          Your Stats
+        </header>
+        <p class="subheader">Keep track of your profits, amount sold, and more.</p>
+
+        <div>
+
+          <div class="group">
+            <span class="label"> <span id="amountTillNextBadge"></span> more sales till new badge:</span>
+            <span id="nextBadge"> <img src="" width="20px"> </span>
+          </div>
+
+          <div class="group">
+            <span class="label">Profits From Selling</span>
+            <span class="sub-group" id="profitsFromSelling"><br>
+              <span class="usd-amount" id="profitsFromSellingUSD"></span>
+            </span>
+          </div>
+
+          <div class="group">
+            <span class="label">Tips Received</span>
+            <span class="sub-group" id="tipsReceived"><br>
+              <span class="usd-amount" id="tipsReceivedUSD"></span>
+            </span>
+          </div>
+
+          <div class="group">
+            <span class="label">Amount Sold</span>
+            <span id="amountSold"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Amount Bought</span>
+            <span id="amountBought"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Likes Received</span>
+            <span id="likesReceived"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Encouragements
+              <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Encouragements get reset when an artwork is put for sale."></i>
+            </span>
+            <span id="currentEncouragements"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Followers</span>
+            <span id="amountOfFollowers"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Following</span>
+            <span id="amountFollowing"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Joined
+              <i class="far fa-calendar-alt" data-toggle="tooltip" data-placement="top" title="DD.MM.YYYY"></i>
+            </span>
+            <span id="dateJoined"></span>
+          </div>
+
+        </div>
+      </div><!--end of stats-->
+
     </div>
 
     <footer>
@@ -131,8 +193,8 @@
     </footer>
   </body>
   <script src="assets/js/theme.js"></script>
-  <script src="assets/js/js.cookie.js"></script>
   <script src="assets/js/nav.js"></script>
-  <script src="assets/js/create.js"></script>
+  <script src="assets/js/js.cookie.js"></script>
+  <script src="assets/js/stats.js"></script>
   <script src="assets/js/connectWallet.js"></script>
-</html>
+  </html>
