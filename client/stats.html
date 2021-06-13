@@ -104,10 +104,9 @@
         <p class="subheader">Keep track of your profits, amount sold, and more.</p>
 
         <div class="info">
-
           <div class="group">
             <span class="label">Profit From Selling</span>
-            <div class="amounts">
+            <div class="amounts profit spinner-grow text-primary spinner-grow-sm">
               <span class="sub-group" id="profitsFromSelling"></span><br>
               <span class="usd-amount" id="profitsFromSellingUSD"></span>
             </div>
@@ -115,15 +114,15 @@
 
           <div class="group">
             <span class="label">Royalties Received</span>
-            <div class="amounts">
-              <span class="sub-group" id="royaltiesReceived"></span><br>
+            <div class="amounts royalty spinner-grow text-primary spinner-grow-sm">
+              <span class="sub-group " id="royaltiesReceived"></span><br>
               <span class="usd-amount" id="royaltiesReceivedUSD"></span>
             </div>
           </div>
 
           <div class="group">
             <span class="label">Tips Received</span>
-            <div class="amounts">
+            <div class="amounts tips spinner-grow text-primary spinner-grow-sm">
               <span class="sub-group" id="tipsReceived"></span> <br>
               <span class="usd-amount" id="tipsReceivedUSD"></span>
             </div>
@@ -131,56 +130,61 @@
 
           <div class="group">
             <span class="label">Total Earned on OpenMint</span>
-            <div class="amounts">
+            <div class="amounts total spinner-grow text-primary spinner-grow-sm">
               <span class="sub-group" id="total"></span><br>
               <span class="usd-amount" id="totalUSD"></span>
             </div>
           </div>
 
           <div class="group">
-            <span class="label">Sell <span id="amountTillNextBadge"></span> more to get this badge:</span>
-            <img id="nextBadge" src="" width="20px">
+            <span class="label">Sell <span class="next-badge spinner-grow text-primary spinner-grow-sm" id="amountTillNextBadge"></span> more to get this badge:</span>
+            <img class="badge-img spinner-grow text-primary spinner-grow-sm" id="nextBadge" src="" width="20px">
           </div>
 
           <div class="group">
             <span class="label">Amount Sold</span>
-            <span id="amountSold"></span>
+            <span class="sold spinner-grow text-primary spinner-grow-sm" id="amountSold"></span>
           </div>
 
           <div class="group">
             <span class="label">Amount Bought</span>
-            <span id="amountBought"></span>
+            <span class="bought spinner-grow text-primary spinner-grow-sm" id="amountBought"></span>
+          </div>
+
+          <div class="group">
+            <span class="label">Amount Minted</span>
+            <span class="minted spinner-grow text-primary spinner-grow-sm" id="amountMinted"></span>
           </div>
 
           <div class="group">
             <span class="label">Likes Received
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total likes received on artwork you have minted."></i>
             </span>
-            <span id="likesReceived"></span>
+            <span class="likes spinner-grow text-primary spinner-grow-sm" id="likesReceived"></span>
           </div>
 
           <div class="group">
             <span class="label">Encouragements
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Encouragements get reset when an artwork is put for sale."></i>
             </span>
-            <span id="currentEncouragements"></span>
+            <span class="encouragements spinner-grow text-primary spinner-grow-sm" id="currentEncouragements"></span>
           </div>
 
           <div class="group">
             <span class="label">Followers</span>
-            <span id="amountOfFollowers"></span>
+            <span class="followers spinner-grow text-primary spinner-grow-sm" id="amountOfFollowers"></span>
           </div>
 
           <div class="group">
             <span class="label">Following</span>
-            <span id="amountFollowing"></span>
+            <span class="following spinner-grow text-primary spinner-grow-sm" id="amountFollowing"></span>
           </div>
 
           <div class="group">
             <span class="label">Joined
               <i class="far fa-calendar-alt" data-toggle="tooltip" data-placement="top" title="DD.MM.YYYY"></i>
             </span>
-            <span id="dateJoined"></span>
+            <span class="date spinner-grow text-primary spinner-grow-sm" id="dateJoined"></span>
           </div>
 
         </div>

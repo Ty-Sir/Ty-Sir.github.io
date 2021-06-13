@@ -83,6 +83,7 @@ async function getProfits(){
     $('#profitsFromSelling').html(`${profitInBnb} BNB`);
     $('#profitsFromSellingUSD').html(`($${priceInUsd})`);
   }
+  $('.profit').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getRoyaltiesReceived(){
@@ -99,6 +100,7 @@ async function getRoyaltiesReceived(){
     $('#royaltiesReceived').html(`${royaltiesInBnb} BNB`);
     $('#royaltiesReceivedUSD').html(`($${priceInUsd})`);
   }
+  $('.royalty').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getTipsReceived(){
@@ -115,6 +117,7 @@ async function getTipsReceived(){
     $('#tipsReceived').html(`${tipsInBnb} BNB`);
     $('#tipsReceivedUSD').html(`($${priceInUsd})`);
   }
+  $('.tips').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getTotalEarned(){
@@ -138,6 +141,7 @@ async function getTotalEarned(){
   let totalUsd = (totalBnb * bnbPrice).toFixed(2);
   $('#total').html(`${totalBnb} BNB`);
   $('#totalUSD').html(`($${totalUsd})`);
+  $('.total').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getNextBadgePreview(){
@@ -146,6 +150,8 @@ async function getNextBadgePreview(){
   let amountSold = userInfo.amountSold;
 
   nextBadge(amountSold);
+  $('.next-badge').removeClass('spinner-grow spinner-grow-sm text-primary')
+  $('.badge-img').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 function nextBadge(amountSold){
@@ -188,6 +194,7 @@ async function getAmountSold(){
   } else{
     $('#amountSold').html(amountSold);
   }
+  $('.sold').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getAmountBought(){
@@ -199,6 +206,14 @@ async function getAmountBought(){
   } else{
     $('#amountBought').html(amountBought);
   }
+  $('.bought').removeClass('spinner-grow spinner-grow-sm text-primary')
+};
+
+async function getAmountMinted(){
+  let artwork = await Moralis.Cloud.run('getArtwork');
+  const count = artwork.filter(item => item.creator.toLowerCase() == user.attributes.ethAddress.toLowerCase()).length;
+  $('#amountMinted').html(count);
+  $('.minted').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getLikesReceived(){
@@ -210,8 +225,10 @@ async function getLikesReceived(){
         let likes = artwork[i].likes;
         totalLikes += +likes;
         $('#likesReceived').html(totalLikes);
+        $('.likes').removeClass('spinner-grow spinner-grow-sm text-primary')
       } else {
         $('#likesReceived').html(0);
+        $('.likes').removeClass('spinner-grow spinner-grow-sm text-primary')
       }
     }
   } catch (error){
@@ -229,11 +246,14 @@ async function getCurrentEncouragements(){
         totalEncouragements += +encouragements;
         if(encouragements == undefined){
           $('#currentEncouragements').html(0);
+          $('.encouragements').removeClass('spinner-grow spinner-grow-sm text-primary')
         } else{
           $('#currentEncouragements').html(totalEncouragements);
+          $('.encouragements').removeClass('spinner-grow spinner-grow-sm text-primary')
         }
       } else {
         $('#currentEncouragements').html(0);
+        $('.encouragements').removeClass('spinner-grow spinner-grow-sm text-primary')
       }
     }
   } catch (error){
@@ -250,6 +270,7 @@ async function getFollowerCount(){
     let followerCount = followers.length;
     $('#amountOfFollowers').html(followerCount);
   }
+  $('.followers').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 async function getFollowingCount(){
@@ -261,6 +282,7 @@ async function getFollowingCount(){
     let followingCount = following.length;
     $('#amountFollowing').html(followingCount);
   }
+  $('.following').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
 
 function getDateJoined(){
@@ -269,4 +291,5 @@ function getDateJoined(){
   let month = joined.getMonth() + 1;
   let year = joined.getFullYear();
   $('#dateJoined').html(`${day}.${month}.${year}`);
+  $('.date').removeClass('spinner-grow spinner-grow-sm text-primary')
 };
