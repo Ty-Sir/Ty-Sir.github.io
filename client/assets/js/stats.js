@@ -18,6 +18,10 @@ async function getAmountSold(){
   const params = {ethAddress: user.attributes.ethAddress};
   let userInfo = await Moralis.Cloud.run('getUser', params);
   let amountSold = userInfo.amountSold;
-  $('#amountSold').html(amountSold);
+  if(amountSold == undefined){
+    $('#amountSold').html(0);
+  } else{
+    $('#amountSold').html(amountSold);
+  }
   console.log(amountSold);
 };
