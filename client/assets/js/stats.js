@@ -22,6 +22,7 @@ function loadInfo(){
   getNextBadgePreview();
   getAmountSold();
   getAmountBought();
+  getAmountMinted();
   getLikesReceived();
   getCurrentEncouragements();
   getFollowerCount();
