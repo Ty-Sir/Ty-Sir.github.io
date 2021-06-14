@@ -21,7 +21,7 @@
   </head>
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="index">
+      <a class="navbar-brand" href="index.html">
         <img src="assets/images-icons/openMintLogo.png" width="30" height="30" class="d-inline-block align-top" alt="OpenMint logo">
         <span id="open" class="ml-1">Open<span id="mint">Mint</span></span>
       </a>
@@ -38,16 +38,16 @@
       <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="index">Discover</a>
+            <a class="nav-link" href="index.html">Discover</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="following">Following</a>
+            <a class="nav-link" href="following.html">Following</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="learn">Learn</a>
+            <a class="nav-link" href="learn.html">Learn</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="create" href="create">CREATE</a>
+            <a class="nav-link" id="create" href="create.html">CREATE</a>
           </li>
           <li class="nav-item mr-1" id="connectWalletTag">
             <button type="button" class="btn btn-primary button-styling shadow-sm" id="connectWalletBtn">Connect</button>
@@ -62,9 +62,9 @@
               <img id="rankInNav" src="" width="12px" alt="seller badge">
             </a>
             <div class="dropdown-menu" aria-labelledby="profile">
-              <a class='dropdown-item' href="stats">My Stats<span class="sr-only">(current)</span></a>
+              <a class='dropdown-item' href="stats.html">My Stats<span class="sr-only">(current)</span></a>
               <a id="myProfile" class='dropdown-item'>My Profile</a>
-              <a class='dropdown-item' href="edit-profile">Edit Profile</a>
+              <a class='dropdown-item' href="edit-profile.html">Edit Profile</a>
               <hr>
               <a class="dropdown-item" id="disconnectWalletBtn">Disconnect Wallet</a>
             </div>
@@ -101,12 +101,13 @@
         <header>
           Your Stats
         </header>
-        <p class="subheader">Keep track of your profits, amount sold, and more.</p>
+        <p class="subheader">Keep track of your profit, amount sold, and more.</p>
 
         <div class="info">
+
           <div class="group">
             <span class="label">Profit From Selling</span>
-            <div class="amounts profit spinner-grow text-primary spinner-grow-sm">
+            <div class="amounts profit spinner-border text-primary spinner-border-sm">
               <span class="sub-group" id="profitsFromSelling"></span><br>
               <span class="usd-amount" id="profitsFromSellingUSD"></span>
             </div>
@@ -114,7 +115,7 @@
 
           <div class="group">
             <span class="label">Royalties Received</span>
-            <div class="amounts royalty spinner-grow text-primary spinner-grow-sm">
+            <div class="amounts royalty spinner-border text-primary spinner-border-sm">
               <span class="sub-group " id="royaltiesReceived"></span><br>
               <span class="usd-amount" id="royaltiesReceivedUSD"></span>
             </div>
@@ -122,7 +123,7 @@
 
           <div class="group">
             <span class="label">Tips Received</span>
-            <div class="amounts tips spinner-grow text-primary spinner-grow-sm">
+            <div class="amounts tips spinner-border text-primary spinner-border-sm">
               <span class="sub-group" id="tipsReceived"></span> <br>
               <span class="usd-amount" id="tipsReceivedUSD"></span>
             </div>
@@ -130,61 +131,61 @@
 
           <div class="group">
             <span class="label">Total Earned on OpenMint</span>
-            <div class="amounts total spinner-grow text-primary spinner-grow-sm">
+            <div class="amounts total spinner-border text-primary spinner-border-sm">
               <span class="sub-group" id="total"></span><br>
               <span class="usd-amount" id="totalUSD"></span>
             </div>
           </div>
 
           <div class="group">
-            <span class="label">Sell <span class="next-badge spinner-grow text-primary spinner-grow-sm" id="amountTillNextBadge"></span> more to get this badge:</span>
-            <img class="badge-img spinner-grow text-primary spinner-grow-sm" id="nextBadge" src="" width="20px">
+            <span class="label">Sell <span class="next-badge spinner-border text-primary spinner-border-sm" id="amountTillNextBadge"></span> more to get this badge:</span>
+            <img class="badge-img spinner-border text-primary spinner-border-sm" id="nextBadge" src="" width="20px">
           </div>
 
           <div class="group">
             <span class="label">Amount Sold</span>
-            <span class="sold spinner-grow text-primary spinner-grow-sm" id="amountSold"></span>
+            <span class="sold spinner-border text-primary spinner-border-sm" id="amountSold"></span>
           </div>
 
           <div class="group">
             <span class="label">Amount Bought</span>
-            <span class="bought spinner-grow text-primary spinner-grow-sm" id="amountBought"></span>
+            <span class="bought spinner-border text-primary spinner-border-sm" id="amountBought"></span>
           </div>
 
           <div class="group">
             <span class="label">Amount Minted</span>
-            <span class="minted spinner-grow text-primary spinner-grow-sm" id="amountMinted"></span>
+            <span class="minted spinner-border text-primary spinner-border-sm" id="amountMinted"></span>
           </div>
 
           <div class="group">
             <span class="label">Likes Received
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Total likes received on artwork you have minted."></i>
             </span>
-            <span class="likes spinner-grow text-primary spinner-grow-sm" id="likesReceived"></span>
+            <span class="likes spinner-border text-primary spinner-border-sm" id="likesReceived"></span>
           </div>
 
           <div class="group">
             <span class="label">Encouragements
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Encouragements get reset when an artwork is put for sale."></i>
             </span>
-            <span class="encouragements spinner-grow text-primary spinner-grow-sm" id="currentEncouragements"></span>
+            <span class="encouragements spinner-border text-primary spinner-border-sm" id="currentEncouragements"></span>
           </div>
 
           <div class="group">
             <span class="label">Followers</span>
-            <span class="followers spinner-grow text-primary spinner-grow-sm" id="amountOfFollowers"></span>
+            <span class="followers spinner-border text-primary spinner-border-sm" id="amountOfFollowers"></span>
           </div>
 
           <div class="group">
             <span class="label">Following</span>
-            <span class="following spinner-grow text-primary spinner-grow-sm" id="amountFollowing"></span>
+            <span class="following spinner-border text-primary spinner-border-sm" id="amountFollowing"></span>
           </div>
 
           <div class="group">
             <span class="label">Joined
               <i class="far fa-calendar-alt" data-toggle="tooltip" data-placement="top" title="DD.MM.YYYY"></i>
             </span>
-            <span class="date spinner-grow text-primary spinner-grow-sm" id="dateJoined"></span>
+            <span class="date spinner-border text-primary spinner-border-sm" id="dateJoined"></span>
           </div>
 
         </div>
