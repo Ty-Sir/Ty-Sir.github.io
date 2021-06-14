@@ -100,10 +100,22 @@ async function getCurrentOwner(){
   }
 };
 
+async function getTimeCreated(){
+  let tokenAddress = token.slice(0, 42);
+  let tokenId = token.slice(42, token.length);
+  const Artwork = Moralis.Object.extend("Artwork");
+  const query = new Moralis.Query(Artwork);
+  query.equalTo("tokenAddress", tokenAddress);
+  query.equalTo("nftId", tokenId);
+  const artwork = await query.first();
+  return artwork.attributes.createdAt.toDateString() + " " + artwork.attributes.createdAt.toLocaleTimeString();
+};
+
 async function getActiveArtworkInfo(){
   try {
     let price = await getOnSaleDetails();
     let owner = await getCurrentOwner();
+    let createdAt = await getTimeCreated();
 
     let activeArtwork = await Moralis.Cloud.run('getArtwork');
     console.log(activeArtwork)
@@ -160,6 +172,7 @@ async function getActiveArtworkInfo(){
           } else{
             $('#description' + tokenAddress + id).html(description);
           }
+          $('#createdAt' + tokenAddress + id).html(createdAt);
           $('#royalty' + tokenAddress + id).html(royalty);
           getAdditionalInfo(tokenAddress, id, additionalInfo, owner);
 
@@ -196,6 +209,7 @@ async function getInactiveArtworkInfo(){
   try {
     let price = await getOnSaleDetails();
     let owner = await getCurrentOwner();
+    let createdAt = await getTimeCreated();
 
     let inactiveArtwork = await Moralis.Cloud.run('getArtwork');
 
@@ -258,6 +272,7 @@ async function getInactiveArtworkInfo(){
           } else{
             $('#description' + tokenAddress + id).html(description);
           }
+          $('#createdAt' + tokenAddress + id).html(createdAt);
           $('#royalty' + tokenAddress + id).html(royalty);
           getAdditionalInfo(tokenAddress, id, additionalInfo, owner);
 
@@ -1417,6 +1432,10 @@ function cardDiv(tokenAddress, id, owner, creator, path){
                         </a>
                         <div class="creator sub-text">Creator</div>
                       </div>
+                    </div>
+
+                    <div class="token-history">
+                      <span class="sub-text">Minted: <span id="createdAt`+tokenAddress+id+`"></span></span>
                     </div>
 
                     <div class="if-royalty">

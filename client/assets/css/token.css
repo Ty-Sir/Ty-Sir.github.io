@@ -161,6 +161,12 @@ a.anchor{
   border-radius: 20px;
 }
 
+.token-history{
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 .if-royalty{
   display: flex;
   justify-content: center;
