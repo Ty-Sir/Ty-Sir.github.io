@@ -174,7 +174,6 @@ async function getActiveArtworkInfo(){
           }
           $('#createdAt' + tokenAddress + id).html(createdAt);
           $('#royalty' + tokenAddress + id).html(royalty);
-          getAdditionalInfo(tokenAddress, id, additionalInfo, owner);
 
           if(unlockableContent && user.attributes.ethAddress.toLowerCase() == owner.toLowerCase()){
             $('.unlockable-div').css('display', 'block');
@@ -186,11 +185,30 @@ async function getActiveArtworkInfo(){
             $('#unlockableContentBtn' + tokenAddress + id).html('Unlockable');
           }
 
+          getAdditionalInfo(tokenAddress, id, additionalInfo, owner);
+
           if(user.attributes.ethAddress.toLowerCase() == owner.toLowerCase()){
             $('.if-owned').css('display', 'block');
             $(".not-onsale").css('display', 'none');
             $(".if-onsale").css('display', 'none');
-            $('#additionalInfo' + tokenAddress + id).html('View/Edit Additional Info');
+
+            if(owner.toLowerCase() == user.attributes.ethAddress.toLowerCase() && !additionalInfo){
+               $('#additionalInfo' + tokenAddress + id).css('display', 'inline');
+               $('#additionalInfo' + tokenAddress + id).html('Add Additional Info');
+               $('#additionalInfoText').css('display', 'block');
+               $('#additionalInfoText').html(additionalInfo);
+               $('#additionalInfo' + tokenAddress + id).click(()=>{
+                 $('#additionalInfoModal').modal('show');
+               });
+             } else if(owner.toLowerCase() == user.attributes.ethAddress.toLowerCase() && additionalInfo){
+               $('#additionalInfo' + tokenAddress + id).html('View/Edit Additional Info');
+               $('#additionalInfoText').css('display', 'block');
+               $('#additionalInfoText').html(additionalInfo);
+               $('#additionalInfo' + tokenAddress + id).click(()=>{
+                 $('#additionalInfoModal').modal('show');
+               });
+             }
+
           } else{
             $('.if-owned').css('display', 'none');
             $(".if-onsale").css('display', 'block');
@@ -267,14 +285,13 @@ async function getInactiveArtworkInfo(){
 
           $('#title' + tokenAddress + id).html(name);
           if(description == ''){
-            $('#description' + tokenAddress + id).css(({'color': "#888", 'font-size': ".8rem", 'font-weight': '500'}));
+            $('#description' + tokenAddress + id).css({'color': "#888", 'font-size': ".8rem", 'font-weight': '500'});
             $('#description' + tokenAddress + id).html('(No description given)');
           } else{
             $('#description' + tokenAddress + id).html(description);
           }
           $('#createdAt' + tokenAddress + id).html(createdAt);
           $('#royalty' + tokenAddress + id).html(royalty);
-          getAdditionalInfo(tokenAddress, id, additionalInfo, owner);
 
           if(unlockableContent && user.attributes.ethAddress.toLowerCase() == owner.toLowerCase()){
             $('.unlockable-div').css('display', 'block');
@@ -286,11 +303,30 @@ async function getInactiveArtworkInfo(){
             $('#unlockableContentBtn' + tokenAddress + id).html('Unlockable');
           }
 
+          getAdditionalInfo(tokenAddress, id, additionalInfo, owner);
+
           if(user.attributes.ethAddress.toLowerCase() == owner.toLowerCase()){
             $('.if-owned').css('display', 'block');
             $(".not-onsale").css('display', 'none');
             $(".if-onsale").css('display', 'none');
-            $('#additionalInfo' + tokenAddress + id).html('View/Edit Additional Info');
+
+            if(owner.toLowerCase() == user.attributes.ethAddress.toLowerCase() && !additionalInfo){
+               $('#additionalInfo' + tokenAddress + id).css('display', 'inline');
+               $('#additionalInfo' + tokenAddress + id).html('Add Additional Info');
+               $('#additionalInfoText').css('display', 'block');
+               $('#additionalInfoText').html(additionalInfo);
+               $('#additionalInfo' + tokenAddress + id).click(()=>{
+                 $('#additionalInfoModal').modal('show');
+               });
+             } else if(owner.toLowerCase() == user.attributes.ethAddress.toLowerCase() && additionalInfo){
+               $('#additionalInfo' + tokenAddress + id).html('View/Edit Additional Info');
+               $('#additionalInfoText').css('display', 'block');
+               $('#additionalInfoText').html(additionalInfo);
+               $('#additionalInfo' + tokenAddress + id).click(()=>{
+                 $('#additionalInfoModal').modal('show');
+               });
+             }
+
           } else{
             $('.if-owned').css('display', 'none');
             $(".if-onsale").css('display', 'none');
@@ -630,14 +666,8 @@ function likeButton(tokenAddress, id, likes){
 };
 
 function getAdditionalInfo(tokenAddress, id, additionalInfo, owner){
-  if(additionalInfo !== ''){
-    $('#additionalInfoText').css('display', 'block');
-    $('#additionalInfoText').html(additionalInfo);
-    $('#additionalInfo' + tokenAddress + id).click(()=>{
-      $('#additionalInfoModal').modal('show');
-    });
-  } else if(owner.toLowerCase() == user.attributes.ethAddress.toLowerCase() && additionalInfo == ''){
-    $('#additionalInfo' + tokenAddress + id).html('Add Additional Info');
+  if(additionalInfo){
+    $('#additionalInfo' + tokenAddress + id).html('View Additional Info');
     $('#additionalInfoText').css('display', 'block');
     $('#additionalInfoText').html(additionalInfo);
     $('#additionalInfo' + tokenAddress + id).click(()=>{
@@ -1410,7 +1440,7 @@ function cardDiv(tokenAddress, id, owner, creator, path){
                     </div>
 
                     <div class="additional-info">
-                      <a class="text-primary mb-3 additional-info-tag" id="additionalInfo`+tokenAddress+id+`">View Additional Info</a>
+                      <a class="text-primary mb-3 additional-info-tag" id="additionalInfo`+tokenAddress+id+`"></a>
                     </div>
 
                     <div class="dividing-line"></div>
